@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* The signature element: a perforated ticket-stub divider between a profile
+   and its links, evoking a boarding pass / library card rather than a
+   generic card-with-shadow layout. */
+.stub-divider {
+  position: relative;
+  height: 1px;
+  background-image: linear-gradient(to right, var(--stub-color, #d9d2c2) 50%, transparent 50%);
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+}
+
+.stub-divider::before,
+.stub-divider::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #faf7f0;
+  border: 1px solid var(--stub-color, #d9d2c2);
+}
+
+.stub-divider::before {
+  left: -9px;
+}
+
+.stub-divider::after {
+  right: -9px;
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid #5b5fef;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
