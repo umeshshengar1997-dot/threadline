@@ -6,6 +6,7 @@ import AvatarUpload from "./AvatarUpload";
 
 export default function OnboardingForm({ error }) {
   const [avatarUrl, setAvatarUrl] = useState(null);
+  const [bio, setBio] = useState("");
   const [isPending, setIsPending] = useState(false);
 
   async function handleSubmit(e) {
@@ -22,45 +23,54 @@ export default function OnboardingForm({ error }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      <div className="flex justify-center">
+        <AvatarUpload onAvatarUrl={setAvatarUrl} />
+      </div>
+
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wide mb-2 text-ink/60">
-          Username
+        <label className="block text-sm font-medium text-gray-900 mb-2">
+          Display Name
         </label>
         <input
           name="username"
           required
-          placeholder="yourname"
-          className="w-full border border-line rounded-lg px-4 py-2.5 bg-white text-sm focus-ring"
+          placeholder="Movieskota"
+          className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <p className="text-xs text-ink/40 mt-1">
-          threadline.app/<span className="font-mono">your-username</span>
-        </p>
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wide mb-2 text-ink/60">
-          Bio (optional)
+        <label className="block text-sm font-medium text-gray-900 mb-2">
+          Bio
         </label>
         <textarea
           name="bio"
           maxLength={160}
-          placeholder="Tell people a bit about yourself"
+          placeholder="Tell people about yourself"
           rows={3}
-          className="w-full border border-line rounded-lg px-4 py-2.5 bg-white text-sm focus-ring resize-none"
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
         />
-        <p className="text-xs text-ink/40 mt-1">Max 160 characters</p>
+        <div className="flex justify-end mt-1">
+          <p className="text-xs text-gray-500">
+            {bio.length} / 160
+          </p>
+        </div>
       </div>
 
-      <AvatarUpload onAvatarUrl={setAvatarUrl} />
-
-      {error && <p className="text-rose text-sm bg-rose/10 p-3 rounded-lg">{error}</p>}
+      {error && (
+        <p className="text-red-500 text-sm text-center bg-red-50 p-3 rounded-lg">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"
         disabled={isPending}
-        className="w-full bg-indigo text-paper rounded-lg py-2.5 font-medium hover:bg-indigo-dark focus-ring disabled:opacity-50 transition text-sm"
+        className="w-full bg-indigo-600 text-white rounded-full py-3 font-medium text-sm hover:bg-indigo-700 disabled:opacity-50 transition"
       >
-        {isPending ? "Setting up..." : "Get started"}
+        {isPending ? "Setting up..." : "Continue"}
       </button>
     </form>
   );
