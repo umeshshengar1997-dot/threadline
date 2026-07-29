@@ -20,40 +20,44 @@ export default function ProfileForm({ profile }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {avatarUrl && (
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center">
           <img
             src={avatarUrl}
             alt="avatar"
-            className="w-16 h-16 rounded-full object-cover border border-line"
+            className="w-20 h-20 rounded-full object-cover border-2 border-indigo"
           />
         </div>
       )}
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wide mb-1">
+        <label className="block text-xs font-mono uppercase tracking-wide mb-2 text-ink/60">
           Display name
         </label>
         <input
           name="display_name"
           defaultValue={profile?.display_name ?? ""}
           placeholder={profile?.username}
-          className="w-full border border-line rounded-lg px-3 py-2 bg-white text-sm focus-ring"
+          className="w-full border border-line rounded-lg px-4 py-2.5 bg-white text-sm focus-ring"
         />
       </div>
 
       <div>
-        <label className="block text-xs font-mono uppercase tracking-wide mb-1">
+        <label className="block text-xs font-mono uppercase tracking-wide mb-2 text-ink/60">
           Bio
         </label>
         <textarea
           name="bio"
           defaultValue={profile?.bio ?? ""}
-          rows={2}
+          rows={3}
           maxLength={160}
-          className="w-full border border-line rounded-lg px-3 py-2 bg-white text-sm focus-ring"
+          placeholder="Tell visitors about yourself"
+          className="w-full border border-line rounded-lg px-4 py-2.5 bg-white text-sm focus-ring resize-none"
         />
+        <p className="text-xs text-ink/40 mt-1">
+          {(profile?.bio ?? "").length} / 160 characters
+        </p>
       </div>
 
       <AvatarUpload onAvatarUrl={setAvatarUrl} />
@@ -61,7 +65,7 @@ export default function ProfileForm({ profile }) {
       <button
         type="submit"
         disabled={isPending}
-        className="bg-ink text-paper px-4 py-2 rounded-lg text-sm font-medium hover:bg-indigo focus-ring disabled:opacity-50"
+        className="w-full bg-indigo text-paper px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-indigo-dark focus-ring disabled:opacity-50 transition"
       >
         {isPending ? "Saving..." : "Save profile"}
       </button>
