@@ -34,8 +34,8 @@ export default async function PublicProfilePage({ params }) {
           {profile.avatar_url ? (
             <img
               src={profile.avatar_url}
-              alt=""
-              className="w-20 h-20 rounded-full object-cover border"
+              alt={profile.display_name || profile.username}
+              className="w-20 h-20 rounded-full object-cover border-2"
               style={{ borderColor: accent }}
             />
           ) : (
