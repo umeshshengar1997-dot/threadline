@@ -30,31 +30,39 @@ export default async function PublicProfilePage({ params }) {
       }`}
     >
       <div className="w-full max-w-sm">
-        <div className="flex flex-col items-center text-center mb-6">
+        <div className="flex flex-col items-center text-center mb-8">
           {profile.avatar_url ? (
             <img
               src={profile.avatar_url}
               alt={profile.display_name || profile.username}
-              className="w-20 h-20 rounded-full object-cover border-2"
+              className="w-24 h-24 rounded-full object-cover border-3"
               style={{ borderColor: accent }}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
             />
-          ) : (
+          ) : null}
+
+          {!profile.avatar_url && (
             <div
-              className="w-20 h-20 rounded-full border-2 flex items-center justify-center font-display text-2xl"
+              className="w-24 h-24 rounded-full border-3 flex items-center justify-center font-display text-3xl"
               style={{ borderColor: accent }}
             >
               {(profile.display_name || profile.username)[0]?.toUpperCase()}
             </div>
           )}
-          <h1 className="font-display text-2xl mt-4">
+
+          <h1 className="font-display text-3xl mt-6 leading-tight">
             {profile.display_name || profile.username}
           </h1>
-          <p className="font-mono text-xs opacity-50">@{profile.username}</p>
-          {profile.bio && <p className="text-sm opacity-70 mt-2">{profile.bio}</p>}
+          <p className="font-mono text-xs opacity-50 mt-1">@{profile.username}</p>
+          {profile.bio && (
+            <p className="text-sm opacity-70 mt-3 max-w-xs">{profile.bio}</p>
+          )}
         </div>
 
         <div
-          className="stub-divider mb-6"
+          className="stub-divider mb-8"
           style={{ "--stub-color": isDark ? "#3A4260" : "#D9D2C2" }}
         />
 
@@ -69,7 +77,7 @@ export default async function PublicProfilePage({ params }) {
           )}
         </div>
 
-        <p className="text-center text-xs opacity-30 font-mono mt-10">
+        <p className="text-center text-xs opacity-30 font-mono mt-12">
           Built with Threadline
         </p>
       </div>
