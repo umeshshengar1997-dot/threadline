@@ -3,32 +3,44 @@ import { createClient } from "@/lib/supabase/server";
 import OnboardingForm from "./OnboardingForm";
 
 export default async function OnboardingPage({ searchParams }) {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  if (!user) redirect("/login");
+  if (!user) redirect("/login");
 
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("username_set")
-    .eq("id", user.id)
-    .single();
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("username_set")
+    .eq("id", user.id)
+    .single();
 
-  // Already completed onboarding — go straight to dashboard
-  if (profile?.username_set) redirect("/dashboard");
+  if (profile?.username_set) redirect("/dashboard");
 
-  return (
-    <main className="min-h-screen flex items-center justify-center px-6 py-10">
-      <div className="w-full max-w-sm">
-        <h1 className="font-display text-3xl mb-2">Complete your profile</h1>
-        <p className="text-ink/60 text-sm mb-8">
-          Set up your link-in-bio page with a username, bio, and avatar.
-        </p>
+  return (
+    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4 py-8">
+      <div className="w-full max-w-sm">
+        <div className="flex justify-between items-center mb-12">
+          <Link href="/" className="text-gray-400 text-sm">
+            Back
+          </Link>
+          <div className="flex gap-1">
+            <div className="w-2 h-2 rounded-full bg-indigo-600"></div>
+            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
+          </div>
+          <span className="text-gray-400 text-sm">Skip</span>
+        </div>
 
-        <OnboardingForm error={searchParams?.error} />
-      </div>
-    </main>
-  );
+        <div className="text-center mb-10">
+          <h1 className="font-bold text-3xl mb-2">Add profile details</h1>
+          <p className="text-gray-600 text-sm">
+            Add your profile image, name, and bio.
+          </p>
+        </div>
+
+        <OnboardingForm error={searchParams?.error} />
+      </div>
+    </main>
+  );
 }
